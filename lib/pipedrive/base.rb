@@ -49,8 +49,10 @@ module Pipedrive
     #
     # @param [Hash] opts
     # @return [Boolean]
-    def update(opts = {})
-      res = put "#{resource_path}/#{id}", :body => opts
+    def update(opts = {}, api_token = nil)
+      original_path = "#{resource_path}/#{id}"
+      path = api_token ? "#{original_path}?api_token=#{api_token}" : original_path
+      res = put path, :body => opts
       if res.success?
         res['data'] = Hash[res['data'].map {|k, v| [k.to_sym, v] }]
         @table.merge!(res['data'])
@@ -100,7 +102,7 @@ module Pipedrive
       end
 
       def create( opts = {}, api_token = nil)
-        path = api_token ? "#{resource_path}?api_token=#{api_token}" : api_token
+        path = api_token ? "#{resource_path}?api_token=#{api_token}" : resource_path
         res = post path, :body => opts
         if res.success?
           res['data'] = opts.merge res['data']
