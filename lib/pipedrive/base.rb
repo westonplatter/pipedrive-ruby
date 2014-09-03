@@ -100,8 +100,8 @@ module Pipedrive
       end
 
       def create( opts = {}, api_token = nil)
-        opts.merge!({:api_token => api_token}) if api_token
-        res = post resource_path, :body => opts
+        path = api_token ? "#{resource_path}?api_token=#{api_token}" : api_token
+        res = post path, :body => opts
         if res.success?
           res['data'] = opts.merge res['data']
           new(res)
