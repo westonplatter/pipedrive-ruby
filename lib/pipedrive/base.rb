@@ -15,7 +15,7 @@ module Pipedrive
   class Base < OpenStruct
 
     include HTTParty
-    
+
     base_uri 'api.pipedrive.com/v1'
     headers HEADERS
     format :json
@@ -84,7 +84,8 @@ module Pipedrive
         attrs['data'].is_a?(Array) ? attrs['data'].map {|data| self.new( 'data' => data ) } : []
       end
 
-      def all(response = nil, options={},get_absolutely_all=false)
+      def all(response = nil, options={}, api_token = nil, get_absolutely_all = true)
+        options.merge!({:api_token => api_token}) if api_token
         res = response || get(resource_path, options)
         if res.ok?
           data = res['data'].nil? ? [] : res['data'].map{|obj| new(obj)}
@@ -98,7 +99,8 @@ module Pipedrive
         end
       end
 
-      def create( opts = {} )
+      def create( opts = {}, api_token = nil)
+        opts.merge!({:api_token => api_token}) if api_token
         res = post resource_path, :body => opts
         if res.success?
           res['data'] = opts.merge res['data']
@@ -107,13 +109,16 @@ module Pipedrive
           bad_response(res,opts)
         end
       end
-      
-      def find(id)
-        res = get "#{resource_path}/#{id}"
+
+      def find(id, api_token = nil)
+        opts = {}
+        opts = {:api_token => api_token} if api_token
+        res = get "#{resource_path}/#{id}", opts
         res.ok? ? new(res) : bad_response(res,id)
       end
 
-      def find_by_name(name, opts={})
+      def find_by_name(name, opts={}, api_token = nil)
+        opts.merge!({:api_token => api_token}) if api_token
         res = get "#{resource_path}/find", :query => { :term => name }.merge(opts)
         res.ok? ? new_list(res) : bad_response(res,{:name => name}.merge(opts))
       end
