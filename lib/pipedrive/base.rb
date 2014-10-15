@@ -101,7 +101,7 @@ module Pipedrive
         end
       end
 
-      def create( opts = {}, api_token = nil)
+      def create(opts = {}, api_token = nil)
         path = api_token ? "#{resource_path}?api_token=#{api_token}" : resource_path
         res = post path, :body => opts
         if res.success?
@@ -119,7 +119,7 @@ module Pipedrive
         res.ok? ? new(res) : bad_response(res,id)
       end
 
-      def find_by_name(name, opts={}, api_token = nil)
+      def find_by_name(name, api_token = nil, opts={})
         opts.merge!({:api_token => api_token}) if api_token
         res = get "#{resource_path}/find", :query => { :term => name }.merge(opts)
         res.ok? ? new_list(res) : bad_response(res,{:name => name}.merge(opts))
