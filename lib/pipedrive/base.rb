@@ -87,8 +87,8 @@ module Pipedrive
       end
 
       def all(api_token = nil, get_absolutely_all = true, response = nil, options={})
-        options.merge!({:api_token => api_token}) if api_token
-        res = response || get(resource_path, options)
+        path = api_token ? "#{resource_path}?api_token=#{api_token}" : resource_path
+        res = get(resource_path, options)
         if res.ok?
           data = res['data'].nil? ? [] : res['data'].map{|obj| new(obj)}
           if get_absolutely_all && res['additional_data']['pagination'] && res['additional_data']['pagination'] && res['additional_data']['pagination']['more_items_in_collection']
