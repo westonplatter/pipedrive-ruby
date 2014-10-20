@@ -86,7 +86,7 @@ module Pipedrive
         attrs['data'].is_a?(Array) ? attrs['data'].map {|data| self.new( 'data' => data ) } : []
       end
 
-      def all(response = nil, options={}, api_token = nil, get_absolutely_all = true)
+      def all(api_token = nil, get_absolutely_all = true, response = nil, options={})
         options.merge!({:api_token => api_token}) if api_token
         res = response || get(resource_path, options)
         if res.ok?
