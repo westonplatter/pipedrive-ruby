@@ -113,9 +113,9 @@ module Pipedrive
       end
 
       def find(id, api_token = nil)
-        opts = {}
-        opts = {:api_token => api_token} if api_token
-        res = get "#{resource_path}/#{id}", opts
+        res_path = "#{resource_path}/#{id}"
+        path = api_token ? "#{resource_path}/?api_token=#{api_token}" : res_path
+        res = get "#{path}/#{id}", opts
         res.ok? ? new(res) : bad_response(res,id)
       end
 
