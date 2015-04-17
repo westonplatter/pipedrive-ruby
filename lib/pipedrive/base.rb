@@ -102,7 +102,7 @@ module Pipedrive
       end
 
       def has_pagination?(res)
-        res['additional_data'] && res['additional_data']['pagination'] && res['additional_data']['pagination'] && res['additional_data']['pagination']['more_items_in_collection']
+        res['additional_data'] && res['additional_data']['pagination'] && res['additional_data']['pagination']['more_items_in_collection']
       end
 
       def create(opts = {}, api_token = nil)

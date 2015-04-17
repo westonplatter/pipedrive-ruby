@@ -43,9 +43,4 @@ class TestPipedriveStage < Test::Unit::TestCase
     assert_equal 1, first_stage.pipeline_id
     assert_equal "Pipeline", first_stage.pipeline_name
   end
-
-  should "return bad_response on errors" do
-    #TODO
-    # flunk "to be tested"
-  end
 end
