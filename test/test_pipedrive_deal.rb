@@ -25,9 +25,8 @@ class TestPipedriveDeal < Test::Unit::TestCase
         :body => File.read(File.join(File.dirname(__FILE__), "data", "create_deal_body.json")),
         :headers => {
           "server" => "nginx/1.2.4",
-          "date" => "Fri, 01 Mar 2013 14:01:03 GMT",
+          "date" => "Fri, 17 Apr 2015 16:43:10 GMT",
           "content-type" => "application/json",
-          "content-length" => "1260",
           "connection" => "keep-alive",
           "access-control-allow-origin" => "*"
         }
