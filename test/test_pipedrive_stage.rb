@@ -6,12 +6,7 @@ class TestPipedriveStage < Test::Unit::TestCase
   end
 
   should "execute a valid stage request" do
-    body = {
-      # "currency" => "EUR",
-      # "org_id" => "72312",
-      # "title" => "Dope Deal",
-      # "value" => "37k"
-    }
+    body = {}
 
     stub_request(:get, "http://api.pipedrive.com/v1/stages?api_token=some-token").
       with(:body => body,
