@@ -7,7 +7,7 @@ module Pipedrive
     end
 
     def products
-      Product.all(get "#{resource_path}/#{id}/products")
+      Product.new_list(get "#{resource_path}/#{id}/products")
     end
     
     def remove_product product_attachment_id
@@ -16,16 +16,19 @@ module Pipedrive
     end
 
     def activities
-      Activity.all(get "#{resource_path}/#{id}/activities")
+      Activity.new_list(get "#{resource_path}/#{id}/activities")
     end
 
     def files
-      File.all(get "#{resource_path}/#{id}/files")
+      File.new_list(get "#{resource_path}/#{id}/files")
     end
 
     def notes(opts = {:sort_by => 'add_time', :sort_mode => 'desc'})
-      Note.all( get("/notes", :query => opts.merge(:deal_id => id) ) )
+      Note.new_list( get("/notes", :query => opts.merge(:deal_id => id) ) )
     end
     
+    def participants
+      Person.new_list(get "#{resource_path}/#{id}/participants")
+    end
   end
 end
