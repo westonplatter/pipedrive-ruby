@@ -10,7 +10,7 @@ module Pipedrive
     end
 
     def deals()
-      Deal.all(get "#{resource_path}/#{id}/deals", :everyone => 1)
+      Deal.new_list(get "#{resource_path}/#{id}/deals", :everyone => 1)
     end
   end
 end
