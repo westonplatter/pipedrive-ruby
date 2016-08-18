@@ -18,6 +18,10 @@ module Pipedrive
     def activities
       Activity.new_list(get "#{resource_path}/#{id}/activities")
     end
+    
+    def emails
+      Email.new_list(get "#{resource_path}/#{id}/emailMessages")
+    end
 
     def files
       File.new_list(get "#{resource_path}/#{id}/files")
