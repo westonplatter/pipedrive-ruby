@@ -38,6 +38,9 @@ module Pipedrive
         if attrs['additional_data']
           struct_attrs.merge!(attrs['additional_data'])
         end
+        if attrs['related_objects']
+          struct_attrs['related_objects'] = attrs['related_objects']
+        end
       else
         struct_attrs = attrs
       end
