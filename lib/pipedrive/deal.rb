@@ -35,6 +35,10 @@ module Pipedrive
       Activity.new_list(get "#{resource_path}/#{id}/activities")
     end
     
+    def contacts
+      Contact.new_list(get "#{resource_path}/#{id}/contacts")
+    end
+    
     def emails
       Email.new_list(get "#{resource_path}/#{id}/emailMessages")
     end
