@@ -1,6 +1,6 @@
 module Pipedrive
   class Deal < Base
-    
+
     def self.filter(filter_id, fetch_all_pages = true)
       acc = []
       start = 0
@@ -12,8 +12,24 @@ module Pipedrive
         break unless fetch_all_pages
         start += limit
       end
+
+      return acc
+    end
+
+
+    def self.get_all(fetch_all_pages = true)
+      acc = []
+      start = 0
+      limit = 100
+      loop do
+        response = Deal.get resource_path, query: {start: start, limit: limit}
+        acc.push(*Deal.new_list(response))
+        break unless response['additional_data']['pagination']['more_items_in_collection']
+        break unless fetch_all_pages
+        start += limit
+      end
       acc
-      
+
       return acc
     end
 
