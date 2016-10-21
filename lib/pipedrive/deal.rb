@@ -16,11 +16,11 @@ module Pipedrive
       return acc
     end
 
-
-    def self.get_all(fetch_all_pages = true)
+    def self.get_all(ops={})
       acc = []
-      start = 0
-      limit = 100
+      start = ops[:start] || 0
+      limit = ops[:limit] || 100
+      fetch_all_pages = ops[:fetch_all_pages] || true
       loop do
         response = Deal.get resource_path, query: {start: start, limit: limit}
         acc.push(*Deal.new_list(response))
@@ -41,7 +41,7 @@ module Pipedrive
     def products
       Product.new_list(get "#{resource_path}/#{id}/products")
     end
-    
+
     def remove_product product_attachment_id
       res = delete "#{resource_path}/#{id}/products", { :body => { :product_attachment_id => product_attachment_id } }
       res.success? ? nil : bad_response(res,product_attachment_id)
@@ -50,11 +50,11 @@ module Pipedrive
     def activities
       Activity.new_list(get "#{resource_path}/#{id}/activities")
     end
-    
+
     def contacts
       Contact.new_list(get "#{resource_path}/#{id}/contacts")
     end
-    
+
     def emails
       Email.new_list(get "#{resource_path}/#{id}/emailMessages")
     end
@@ -66,7 +66,7 @@ module Pipedrive
     def notes(opts = {:sort_by => 'add_time', :sort_mode => 'desc'})
       Note.new_list( get("/notes", :query => opts.merge(:deal_id => id) ) )
     end
-    
+
     def participants
       Person.new_list(get "#{resource_path}/#{id}/participants")
     end
